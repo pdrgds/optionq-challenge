@@ -23,6 +23,8 @@ testWithDb('user service', () => {
   });
 
   test('user can retrieve its timeline', async (t) => {
+    const app = build(t);
+
     await services.user.create('test1', 'email@example.com', '1234');
     await services.user.create('test2', 'email2@example.com', '5678');
     await services.user.create('test3', 'email3@example.com', '98712');
@@ -33,7 +35,13 @@ testWithDb('user service', () => {
     await services.tweet.create('test1', 'hello, world!');
     await services.tweet.create('test1', 'something else');
 
-    const test3Timeline = await services.user.getTimeline('test3');
+    const res = await app.inject({
+      url: '/user/test1/timeline',
+      method: 'GET',
+      payload: { email: 'email@example.com', inputPassword: '1234' },
+    });
+
+    const test3Timeline = JSON.parse(res.body);
 
     t.equals(test3Timeline[0].text, 'hello, world!');
     t.equals(test3Timeline[1].text, 'something else');

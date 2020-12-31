@@ -12,7 +12,7 @@ const schema = {
   },
   response: {
     200: {
-      description: 'Successful logout',
+      description: 'Requested user timeline',
       type: 'array',
       items: {
         type: 'object',
