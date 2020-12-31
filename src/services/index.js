@@ -1,7 +1,7 @@
-"use strict"
+'use strict';
 
 module.exports = {
-    user: require("./user"),
-    tweet: require("./tweet"),
-    session: require("./session")
-}
+  session: require('./session'),
+  user: require('./user'),
+  tweet: require('./tweet'),
+};

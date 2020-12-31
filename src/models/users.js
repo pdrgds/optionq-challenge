@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
-const database = require("../database");
+const { DataTypes } = require('sequelize');
+const database = require('../database');
 
-module.exports = database.define("User", {
+module.exports = database.define('User', {
   handle: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -24,7 +24,7 @@ module.exports = database.define("User", {
   timeline: {
     type: DataTypes.JSON,
   },
-  email:{
+  email: {
     type: DataTypes.STRING,
   },
   password: {

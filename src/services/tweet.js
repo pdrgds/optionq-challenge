@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-const { Sequelize } = require("sequelize");
-const userService = require("./user");
-const models = require("../models");
+const { Sequelize } = require('sequelize');
+const userService = require('./user');
+const models = require('../models');
 
 async function create(handle, text) {
   const tweet = await models.tweets.create({ userHandle: handle, text });
@@ -34,14 +34,10 @@ async function distributeTweet(handle, tweetId) {
     where: { handle: user.followers },
   });
 
-  return Promise.all(
-    followers.map((follower) =>
-      follower.update({ timeline: [...follower.timeline, tweetId] })
-    )
-  );
+  return Promise.all(followers.map((follower) => follower.update({ timeline: [...follower.timeline, tweetId] })));
 }
 
-function count(){
+function count() {
   return models.tweets.count();
 }
 

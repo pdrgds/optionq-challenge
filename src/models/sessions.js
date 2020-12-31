@@ -1,12 +1,12 @@
-const { DataTypes } = require("sequelize");
-const database = require("../database");
+const { DataTypes } = require('sequelize');
+const database = require('../database');
 
-module.exports = database.define("Sessions", {
+module.exports = database.define('Sessions', {
   id: {
     type: DataTypes.STRING,
     primaryKey: true,
   },
   userHandle: {
-      type: DataTypes.STRING
-  }
+    type: DataTypes.STRING,
+  },
 });

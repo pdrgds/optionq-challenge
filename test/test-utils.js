@@ -1,5 +1,5 @@
-const { test, beforeEach, tearDown } = require("tap");
-const sequelize = require("../src/database");
+const { test, beforeEach, tearDown } = require('tap');
+const sequelize = require('../src/database');
 
 function testWithDb(description, testFn) {
   beforeEach(async () => {

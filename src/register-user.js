@@ -1,17 +1,17 @@
-"use strict";
+'use strict';
 
-const readline = require("readline");
+const readline = require('readline');
 
-const services = require("../src/services");
+const services = require('../src/services');
 
 async function main() {
   const [question, close] = useQuestion();
 
-  const email = await question("Email:\n");
+  const email = await question('Email:\n');
 
-  const username = await question("Username:\n");
+  const username = await question('Username:\n');
 
-  const inputPassword = await question("Password:\n");
+  const inputPassword = await question('Password:\n');
 
   await services.user.create(username, email, inputPassword);
 
@@ -24,8 +24,7 @@ function useQuestion() {
     output: process.stdout,
   });
 
-  const promiseBasedQuestion = (question) =>
-    new Promise((resolve) => rl.question(question, resolve));
+  const promiseBasedQuestion = (question) => new Promise((resolve) => rl.question(question, resolve));
 
   return [promiseBasedQuestion, rl.close];
 }

@@ -1,10 +1,9 @@
-"use strict";
+'use strict';
 
-const bcrypt = require("bcrypt");
-const services = require(".");
+const bcrypt = require('bcrypt');
 
-const models = require("../models");
-const sessions = require("../models/sessions");
+const models = require('../models');
+const sessionService = require('./session');
 
 async function follow(sourceHandle, targetHandle) {
   const sourceUser = await findByHandle(sourceHandle);
@@ -57,22 +56,22 @@ async function login(email, inputPassword) {
   const user = await models.users.findOne({ where: { email } });
 
   if (!user) {
-    throw new Error("user doesn't exist");
+    throw new Error('user doesn\'t exist');
   }
 
   const isPasswordCorrect = await bcrypt.compare(inputPassword, user.password);
 
   if (!isPasswordCorrect) {
-    throw new Error("wrong password");
+    throw new Error('wrong password');
   }
 
-  const session = await services.session.create(user.handle);
+  const session = await sessionService.create(user.handle);
 
   return session;
 }
 
 async function logout(sessionId) {
-  return services.session.destroy(sessionId);
+  return sessionService.destroy(sessionId);
 }
 
 module.exports = {

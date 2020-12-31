@@ -1,5 +1,5 @@
-const models = require("../models");
-const { v4: uuidv4 } = require("uuid");
+const models = require('../models');
+const { v4: uuidv4 } = require('uuid');
 
 function create(userHandle) {
   const id = uuidv4();
