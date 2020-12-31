@@ -3,8 +3,11 @@
 const path = require('path');
 const AutoLoad = require('fastify-autoload');
 
+const database = require('./database');
+
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
+  await database.sync();
 
   // Do not touch the following lines
 
