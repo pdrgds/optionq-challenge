@@ -1,6 +1,6 @@
 'use strict';
 
-const database = require('../src/database');
+const database = require('../../src/database');
 
 const { test } = require('tap');
 
