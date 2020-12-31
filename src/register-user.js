@@ -13,9 +13,9 @@ async function main() {
 
   const inputPassword = await question('Password:\n');
 
-  await services.user.create(username, email, inputPassword);
-
   close();
+
+  await services.user.create(username, email, inputPassword);
 }
 
 function useQuestion() {
@@ -26,7 +26,7 @@ function useQuestion() {
 
   const promiseBasedQuestion = (question) => new Promise((resolve) => rl.question(question, resolve));
 
-  return [promiseBasedQuestion, rl.close];
+  return [promiseBasedQuestion, () => rl.close()];
 }
 
 main();
