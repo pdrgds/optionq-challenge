@@ -2,6 +2,7 @@
 
 const { test } = require('tap');
 const { testWithDb } = require('../test-utils');
+const { build } = require('../helper');
 
 const services = require('../../src/services');
 
@@ -56,9 +57,19 @@ testWithDb('user service', () => {
   });
 
   test('should login and logout correctly with an existing user', async (t) => {
+    const app = build(t);
+
     await services.user.create('test1', 'email@example.com', '1234');
 
-    const session = await services.user.login('email@example.com', '1234');
+    const res = await app.inject({
+      url: '/user/login',
+      method: 'POST',
+      payload: { email: 'email@example.com', inputPassword: '1234' },
+    });
+
+    const [cookie] = res.cookies;
+
+    const session = await services.session.check(cookie.value);
 
     t.same(session.userHandle, 'test1');
 
