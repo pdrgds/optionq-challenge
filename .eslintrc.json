@@ -175,19 +175,12 @@
     "semi-spacing": "off",
     "semi-style": ["error", "last"],
     "semi": ["error", "always"],
-    "sonarjs/no-duplicate-string": ["error", 5],
     "sort-vars": "error",
     "strict": ["error", "global"],
     "symbol-description": "error",
     "template-curly-spacing": ["error", "never"],
     "template-tag-spacing": "error",
     "unicode-bom": ["error", "never"],
-    "unicorn/filename-case": [
-      "error",
-      {
-        "case": "kebabCase"
-      }
-    ],
     "valid-jsdoc": "error",
     "vars-on-top": "error",
     "wrap-iife": "error",
