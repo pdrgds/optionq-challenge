@@ -3,6 +3,8 @@
 const path = require('path');
 const AutoLoad = require('fastify-autoload');
 const cookie = require('fastify-cookie');
+const fastifySwagger = require('fastify-swagger');
+
 const database = require('./database');
 
 module.exports = async function (fastify, opts) {
@@ -10,6 +12,18 @@ module.exports = async function (fastify, opts) {
   await database.sync();
 
   fastify.register(cookie);
+
+  fastify.register(fastifySwagger, {
+    exposeRoute: true,
+    routePrefix: '/docs',
+    swagger: {
+      info: {
+        title: 'Twitter',
+        description: 'Twitter-like API',
+        version: '0.0.1',
+      },
+    },
+  });
 
   // Do not touch the following lines
 

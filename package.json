@@ -24,6 +24,7 @@
     "fastify-cli": "^2.6.0",
     "fastify-cookie": "^5.1.0",
     "fastify-plugin": "^3.0.0",
+    "fastify-swagger": "^3.5.0",
     "mysql2": "^2.2.5",
     "prettier": "^2.2.1",
     "sequelize": "^6.3.5",
