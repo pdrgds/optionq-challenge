@@ -3,7 +3,7 @@
 const { test } = require('tap');
 const { testWithDb } = require('../test-utils');
 
-const services = require('../src/services');
+const services = require('../../src/services');
 
 testWithDb('tweet service', () => {
   test('should create a new tweet and distribute it to all followers timelines', async (t) => {
