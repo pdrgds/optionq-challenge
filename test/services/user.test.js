@@ -1,5 +1,5 @@
 const { test, beforeEach, tearDown } = require("tap");
-const { testWithDb } = require("./test-utils");
+const { testWithDb } = require("../test-utils");
 
 const sequelize = require("../src/database");
 
