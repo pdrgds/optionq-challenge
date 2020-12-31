@@ -18,9 +18,9 @@ async function login(req, reply) {
 async function logout(req, reply) {
   const sessionId = req.body.sessionId;
 
-  await services.user.logout(sessionId);
+  const session = await services.user.logout(sessionId);
 
-  reply.code(200);
+  reply.code(200).send(session);
 }
 
 module.exports = { login, logout };
