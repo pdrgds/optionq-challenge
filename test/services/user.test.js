@@ -73,7 +73,11 @@ testWithDb('user service', () => {
 
     t.same(session.userHandle, 'test1');
 
-    await services.user.logout(session.id);
+    await app.inject({
+      url: '/user/logout',
+      method: 'POST',
+      payload: { sessionId: session.id },
+    });
 
     const sameSession = await services.session.check(session.id);
 
