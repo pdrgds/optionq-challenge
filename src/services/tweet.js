@@ -16,7 +16,7 @@ async function retweet(handle, tweetId) {
   return distributeTweet(handle, tweetId);
 }
 
-async function searchHashtag(tag) {
+function searchHashtag(tag) {
   return models.tweets.findAll({
     where: { text: { [Sequelize.Op.like]: `%#${tag}%` } },
   });

@@ -70,7 +70,7 @@ async function login(email, inputPassword) {
   return session;
 }
 
-async function logout(sessionId) {
+function logout(sessionId) {
   return sessionService.destroy(sessionId);
 }
 
