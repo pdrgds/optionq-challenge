@@ -9,7 +9,8 @@
   "scripts": {
     "test": "tap test/**/*.test.js",
     "start": "fastify start -l info app.js",
-    "dev": "fastify start -w -l info -P app.js"
+    "dev": "fastify start -w -l info -P app.js",
+    "lint": "prettier --write '{src,test}/**/*.js' && eslint --fix '{src,test}/**/*.js'"
   },
   "keywords": [],
   "author": "",
@@ -17,11 +18,13 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
+    "eslint": "^7.16.0",
     "fastify": "^3.0.0",
     "fastify-autoload": "^3.0.2",
     "fastify-cli": "^2.6.0",
     "fastify-plugin": "^3.0.0",
     "mysql2": "^2.2.5",
+    "prettier": "^2.2.1",
     "sequelize": "^6.3.5",
     "uuid": "8.3.2"
   },
