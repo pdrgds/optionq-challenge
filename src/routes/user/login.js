@@ -3,7 +3,7 @@
 const controllers = require('../../controllers');
 
 const schema = {
-  description: 'user login',
+  description: 'Given an email and password, sets a session ID as a cookie',
   body: {
     type: 'object',
     properties: {
@@ -12,12 +12,6 @@ const schema = {
         format: 'email',
       },
       inputPassword: { type: 'string' },
-    },
-  },
-  response: {
-    200: {
-      description: 'successful login',
-      type: 'string',
     },
   },
 };
