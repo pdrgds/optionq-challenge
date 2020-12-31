@@ -1,16 +1,13 @@
 'use strict';
 
-const { test, beforeEach, tearDown } = require('tap');
+const { test } = require('tap');
 const { testWithDb } = require('../test-utils');
 
-const sequelize = require('../src/database');
-
 const services = require('../src/services');
-const models = require('../src/models');
 
 testWithDb('tweet service', () => {
   test('should create a new tweet and distribute it to all followers timelines', async (t) => {
-    const test1 = await services.user.create('test1', 'email@example.com', '12345');
+    await services.user.create('test1', 'email@example.com', '12345');
     const test2 = await services.user.create('test2', 'email2@example.com', '123456');
     const test3 = await services.user.create('test3', 'email3@example.com', '98712');
 

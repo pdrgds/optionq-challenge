@@ -1,4 +1,4 @@
-"use strict"
+'use strict';
 
 const models = require('../models');
 const { v4: uuidv4 } = require('uuid');

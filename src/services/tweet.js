@@ -12,7 +12,7 @@ async function create(handle, text) {
   return tweet;
 }
 
-async function retweet(handle, tweetId) {
+function retweet(handle, tweetId) {
   return distributeTweet(handle, tweetId);
 }
 

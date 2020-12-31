@@ -1,10 +1,9 @@
-const { test, beforeEach, tearDown } = require('tap');
+'use strict';
+
+const { test } = require('tap');
 const { testWithDb } = require('../test-utils');
 
-const sequelize = require('../../src/database');
-
 const services = require('../../src/services');
-const models = require('../../src/models');
 
 testWithDb('user service', () => {
   test('user can follow another user', async (t) => {
@@ -23,15 +22,15 @@ testWithDb('user service', () => {
   });
 
   test('user can retrieve its timeline', async (t) => {
-    const test1 = await services.user.create('test1', 'email@example.com', '1234');
-    const test2 = await services.user.create('test2', 'email2@example.com', '5678');
-    const test3 = await services.user.create('test3', 'email3@example.com', '98712');
+    await services.user.create('test1', 'email@example.com', '1234');
+    await services.user.create('test2', 'email2@example.com', '5678');
+    await services.user.create('test3', 'email3@example.com', '98712');
 
     await services.user.follow('test2', 'test1');
     await services.user.follow('test3', 'test1');
 
-    const tweet1 = await services.tweet.create('test1', 'hello, world!');
-    const tweet2 = await services.tweet.create('test1', 'something else');
+    await services.tweet.create('test1', 'hello, world!');
+    await services.tweet.create('test1', 'something else');
 
     const test3Timeline = await services.user.getTimeline('test3');
 
@@ -42,9 +41,9 @@ testWithDb('user service', () => {
   });
 
   test('following count should return correct value', async (t) => {
-    const test1 = await services.user.create('test1', 'email@example.com', '1234');
-    const test2 = await services.user.create('test2', 'email2@example.com', '5678');
-    const test3 = await services.user.create('test3', 'email3@example.com', '98712');
+    await services.user.create('test1', 'email@example.com', '1234');
+    await services.user.create('test2', 'email2@example.com', '5678');
+    await services.user.create('test3', 'email3@example.com', '98712');
 
     await services.user.follow('test1', 'test2');
     await services.user.follow('test1', 'test3');
@@ -57,7 +56,7 @@ testWithDb('user service', () => {
   });
 
   test('should login correctly with an existing user', async (t) => {
-    const test1 = await services.user.create('test1', 'email@example.com', '1234');
+    await services.user.create('test1', 'email@example.com', '1234');
 
     const session = await services.user.login('email@example.com', '1234');
 

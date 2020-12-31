@@ -1,4 +1,6 @@
-const { test, beforeEach, tearDown } = require('tap');
+'use strict';
+
+const { beforeEach, tearDown } = require('tap');
 const sequelize = require('../src/database');
 
 function testWithDb(description, testFn) {
