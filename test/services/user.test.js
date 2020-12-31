@@ -55,12 +55,18 @@ testWithDb('user service', () => {
     t.end();
   });
 
-  test('should login correctly with an existing user', async (t) => {
+  test('should login and logout correctly with an existing user', async (t) => {
     await services.user.create('test1', 'email@example.com', '1234');
 
     const session = await services.user.login('email@example.com', '1234');
 
     t.same(session.userHandle, 'test1');
+
+    await services.user.logout(session.id);
+
+    const sameSession = await services.session.check(session.id);
+
+    t.notOk(sameSession);
 
     t.end();
   });
