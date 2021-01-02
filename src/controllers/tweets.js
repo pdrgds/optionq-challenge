@@ -18,4 +18,13 @@ async function searchByHashtag(req, reply) {
   reply.code(200).send(searchResult);
 }
 
-module.exports = { getTimeline, searchByHashtag };
+async function create(req, reply) {
+  const userHandle = req.loggedUserHandle;
+  const text = req.body.text;
+
+  const newTweet = await services.tweet.create(userHandle, text);
+
+  reply.code(200).send(newTweet);
+}
+
+module.exports = { getTimeline, searchByHashtag, create };

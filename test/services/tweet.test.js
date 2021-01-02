@@ -8,15 +8,27 @@ const services = require('../../src/services');
 
 testWithDb('tweet service', () => {
   test('should create a new tweet and distribute it to all followers timelines', async (t) => {
+    const app = build(t);
+
     await services.user.create('test1', 'email@example.com', '12345');
     const test2 = await services.user.create('test2', 'email2@example.com', '123456');
     const test3 = await services.user.create('test3', 'email3@example.com', '98712');
 
     await services.friendship.create('test2', 'test1');
+
     await services.friendship.create('test3', 'test1');
 
     const tweet1 = await services.tweet.create('test1', 'hello, world!');
-    const tweet2 = await services.tweet.create('test1', 'something else');
+
+    const session = await services.auth.login('email@example.com', '12345');
+    const res = await app.inject({
+      url: '/tweets/create',
+      method: 'POST',
+      payload: { text: 'something else' },
+      cookies: { session: session.id },
+    });
+
+    const tweet2 = JSON.parse(res.body);
 
     await test2.reload();
     await test3.reload();
