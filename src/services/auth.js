@@ -3,7 +3,7 @@
 const bcrypt = require('bcrypt');
 
 const models = require('../models');
-const sessionService = require('../services');
+const sessionService = require('./session');
 
 async function login(email, inputPassword) {
   const user = await models.users.findOne({ where: { email } });
