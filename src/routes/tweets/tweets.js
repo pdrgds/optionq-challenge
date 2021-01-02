@@ -3,13 +3,7 @@
 const controllers = require('../../controllers');
 
 const schema = {
-  description: 'Given an user handle, return its timeline',
-  params: {
-    userHandle: {
-      type: 'string',
-      description: 'User handle e.g. @pedroguedes',
-    },
-  },
+  description: 'Return the logged user timeline',
   response: {
     200: {
       description: 'Requested user tweets',
@@ -33,5 +27,6 @@ const schema = {
 };
 
 module.exports = async function (fastify) {
-  fastify.get('/:userId/home_timeline', { schema }, controllers.tweets.getTimeline);
+  fastify.addHook('onRequest', controllers.auth.check);
+  fastify.get('/home_timeline', { schema }, controllers.tweets.getTimeline);
 };

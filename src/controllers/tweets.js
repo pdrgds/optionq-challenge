@@ -3,7 +3,7 @@
 const services = require('../services');
 
 async function getTimeline(req, reply) {
-  const userHandle = req.params.userId;
+  const userHandle = req.loggedUserHandle;
 
   const timeline = await services.tweet.getTimeline(userHandle);
 

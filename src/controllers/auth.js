@@ -23,4 +23,16 @@ async function logout(req, reply) {
   reply.code(200).send(session);
 }
 
-module.exports = { login, logout };
+async function check(req, reply) {
+  const sessionId = req.cookies.session || '';
+
+  const session = await services.session.check(sessionId);
+
+  if (!session) {
+    reply.code(401).send();
+  } else {
+    req.loggedUserHandle = session.userHandle;
+  }
+}
+
+module.exports = { login, logout, check };

@@ -74,10 +74,13 @@ testWithDb('tweet service', () => {
     await services.tweet.create('test1', 'hello, world!');
     await services.tweet.create('test1', 'something else');
 
+    const session = await services.auth.login('email@example.com', '1234');
+
     const res = await app.inject({
-      url: '/tweets/test1/home_timeline',
+      url: '/tweets/home_timeline',
       method: 'GET',
       payload: { email: 'email@example.com', inputPassword: '1234' },
+      cookies: { session: session.id },
     });
 
     const test3Timeline = JSON.parse(res.body);
