@@ -41,4 +41,10 @@ function count() {
   return models.tweets.count();
 }
 
-module.exports = { create, retweet, searchHashtag, count };
+async function getTimeline(handle) {
+  const user = await userService.findByHandle(handle);
+
+  return models.tweets.findAll({ where: { id: user.timeline } });
+}
+
+module.exports = { create, retweet, searchHashtag, count, getTimeline };

@@ -38,12 +38,6 @@ async function create(handle, email, inputPassword) {
   });
 }
 
-async function getTimeline(handle) {
-  const user = await findByHandle(handle);
-
-  return models.tweets.findAll({ where: { id: user.timeline } });
-}
-
 function getFollowingCount(handle) {
   return findByHandle(handle).then((user) => user.followingCount);
 }
@@ -56,7 +50,7 @@ async function login(email, inputPassword) {
   const user = await models.users.findOne({ where: { email } });
 
   if (!user) {
-    throw new Error('user doesn\'t exist');
+    throw new Error("user doesn't exist");
   }
 
   const isPasswordCorrect = await bcrypt.compare(inputPassword, user.password);
@@ -78,7 +72,6 @@ module.exports = {
   follow,
   create,
   findByHandle,
-  getTimeline,
   getFollowingCount,
   login,
   logout,

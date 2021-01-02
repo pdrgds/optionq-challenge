@@ -12,7 +12,7 @@ const schema = {
   },
   response: {
     200: {
-      description: 'Requested user timeline',
+      description: 'Requested user tweets',
       type: 'array',
       items: {
         type: 'object',
@@ -33,5 +33,5 @@ const schema = {
 };
 
 module.exports = async function (fastify) {
-  fastify.get('/:user/timeline', { schema }, controllers.user.getTimeline);
+  fastify.get('/:userId/home_timeline', { schema }, controllers.tweets.getTimeline);
 };

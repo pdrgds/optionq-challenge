@@ -23,12 +23,4 @@ async function logout(req, reply) {
   reply.code(200).send(session);
 }
 
-async function getTimeline(req, reply) {
-  const userHandle = req.params.user;
-
-  const timeline = await services.user.getTimeline(userHandle);
-
-  reply.code(200).send(timeline);
-}
-
-module.exports = { login, logout, getTimeline };
+module.exports = { login, logout };

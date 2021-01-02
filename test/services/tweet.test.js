@@ -2,6 +2,7 @@
 
 const { test } = require('tap');
 const { testWithDb } = require('../test-utils');
+const { build } = require('../helper');
 
 const services = require('../../src/services');
 
@@ -56,6 +57,33 @@ testWithDb('tweet service', () => {
     const count = await services.tweet.count();
 
     t.same(count, 4);
+
+    t.end();
+  });
+
+  test('user can retrieve its timeline', async (t) => {
+    const app = build(t);
+
+    await services.user.create('test1', 'email@example.com', '1234');
+    await services.user.create('test2', 'email2@example.com', '5678');
+    await services.user.create('test3', 'email3@example.com', '98712');
+
+    await services.user.follow('test2', 'test1');
+    await services.user.follow('test3', 'test1');
+
+    await services.tweet.create('test1', 'hello, world!');
+    await services.tweet.create('test1', 'something else');
+
+    const res = await app.inject({
+      url: '/tweets/test1/home_timeline',
+      method: 'GET',
+      payload: { email: 'email@example.com', inputPassword: '1234' },
+    });
+
+    const test3Timeline = JSON.parse(res.body);
+
+    t.equals(test3Timeline[0].text, 'hello, world!');
+    t.equals(test3Timeline[1].text, 'something else');
 
     t.end();
   });
