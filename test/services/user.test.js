@@ -11,8 +11,8 @@ testWithDb('user service', () => {
     await services.user.create('test2', 'email2@example.com', '5678');
     await services.user.create('test3', 'email3@example.com', '98712');
 
-    await services.user.follow('test1', 'test2');
-    await services.user.follow('test1', 'test3');
+    await services.friendship.create('test1', 'test2');
+    await services.friendship.create('test1', 'test3');
 
     const followingCount = await services.user.getFollowingCount('test1');
 
