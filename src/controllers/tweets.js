@@ -10,4 +10,12 @@ async function getTimeline(req, reply) {
   reply.code(200).send(timeline);
 }
 
-module.exports = { getTimeline };
+async function searchByHashtag(req, reply) {
+  const hashtag = req.query.hashtag;
+
+  const searchResult = await services.tweet.searchHashtag(hashtag);
+
+  reply.code(200).send(searchResult);
+}
+
+module.exports = { getTimeline, searchByHashtag };

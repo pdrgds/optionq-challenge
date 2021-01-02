@@ -31,6 +31,8 @@ testWithDb('tweet service', () => {
   });
 
   test('search by hashtag should return correct results', async (t) => {
+    const app = build(t);
+
     await services.user.create('test1', 'email@example.com', '12345');
     await services.tweet.create('test1', 'hello, world!');
     await services.tweet.create('test1', 'hello, world!test');
@@ -38,7 +40,16 @@ testWithDb('tweet service', () => {
     const tweet1 = await services.tweet.create('test1', 'hello, #test world!');
     const tweet2 = await services.tweet.create('test1', 'hello, world!#test');
 
-    const result = await services.tweet.searchHashtag('test');
+    const session = await services.auth.login('email@example.com', '12345');
+
+    const res = await app.inject({
+      url: '/tweets/search?hashtag=test',
+      method: 'GET',
+      payload: { email: 'email@example.com', inputPassword: '1234' },
+      cookies: { session: session.id },
+    });
+
+    const result = JSON.parse(res.payload);
 
     t.same(tweet1.id, result[0].id);
     t.same(tweet2.id, result[1].id);
