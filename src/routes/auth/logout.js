@@ -27,5 +27,5 @@ const schema = {
 };
 
 module.exports = async function (fastify) {
-  fastify.post('/logout', { schema }, controllers.users.logout);
+  fastify.post('/logout', { schema }, controllers.auth.logout);
 };

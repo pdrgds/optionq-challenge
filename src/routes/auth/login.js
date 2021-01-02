@@ -17,5 +17,5 @@ const schema = {
 };
 
 module.exports = async function (fastify, opts) {
-  fastify.post('/login', { schema }, controllers.users.login);
+  fastify.post('/login', { schema }, controllers.auth.login);
 };
