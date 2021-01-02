@@ -6,21 +6,6 @@ const { testWithDb } = require('../test-utils');
 const services = require('../../src/services');
 
 testWithDb('user service', () => {
-  test('user can follow another user', async (t) => {
-    const test1 = await services.user.create('test1', 'email@example.com', '12345');
-    const test2 = await services.user.create('test2', 'email2@example.com', '123456');
-
-    await services.user.follow('test1', 'test2');
-
-    await test1.reload();
-    await test2.reload();
-
-    t.ok(test1.following.includes('test2'));
-    t.ok(test2.followers.includes('test1'));
-
-    t.end();
-  });
-
   test('following count should return correct value', async (t) => {
     await services.user.create('test1', 'email@example.com', '1234');
     await services.user.create('test2', 'email2@example.com', '5678');

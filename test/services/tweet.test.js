@@ -12,8 +12,8 @@ testWithDb('tweet service', () => {
     const test2 = await services.user.create('test2', 'email2@example.com', '123456');
     const test3 = await services.user.create('test3', 'email3@example.com', '98712');
 
-    await services.user.follow('test2', 'test1');
-    await services.user.follow('test3', 'test1');
+    await services.friendship.create('test2', 'test1');
+    await services.friendship.create('test3', 'test1');
 
     const tweet1 = await services.tweet.create('test1', 'hello, world!');
     const tweet2 = await services.tweet.create('test1', 'something else');
@@ -68,8 +68,8 @@ testWithDb('tweet service', () => {
     await services.user.create('test2', 'email2@example.com', '5678');
     await services.user.create('test3', 'email3@example.com', '98712');
 
-    await services.user.follow('test2', 'test1');
-    await services.user.follow('test3', 'test1');
+    await services.friendship.create('test2', 'test1');
+    await services.friendship.create('test3', 'test1');
 
     await services.tweet.create('test1', 'hello, world!');
     await services.tweet.create('test1', 'something else');
