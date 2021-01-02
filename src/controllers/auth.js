@@ -16,7 +16,7 @@ async function login(req, reply) {
 }
 
 async function logout(req, reply) {
-  const sessionId = req.body.sessionId;
+  const sessionId = req.cookies.session;
 
   const session = await services.auth.logout(sessionId);
 

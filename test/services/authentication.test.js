@@ -26,8 +26,8 @@ testWithDb('authentication service', () => {
 
     await app.inject({
       url: '/auth/logout',
-      method: 'POST',
-      payload: { sessionId: session.id },
+      method: 'GET',
+      cookies: { session: session.id },
     });
 
     const sameSession = await services.session.check(session.id);
