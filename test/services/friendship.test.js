@@ -2,15 +2,25 @@
 
 const { test } = require('tap');
 const { testWithDb } = require('../test-utils');
+const { build } = require('../helper');
 
 const services = require('../../src/services');
 
-testWithDb('user service', () => {
+testWithDb('friendship service', () => {
   test('user can follow another user', async (t) => {
+    const app = build(t);
+
     const test1 = await services.user.create('test1', 'email@example.com', '12345');
     const test2 = await services.user.create('test2', 'email2@example.com', '123456');
 
-    await services.friendship.create('test1', 'test2');
+    const session = await services.auth.login('email@example.com', '12345');
+
+    await app.inject({
+      url: '/friendship/create',
+      method: 'POST',
+      payload: { targetUserHandle: 'test2' },
+      cookies: { session: session.id },
+    });
 
     await test1.reload();
     await test2.reload();
