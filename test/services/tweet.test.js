@@ -100,13 +100,22 @@ testWithDb('tweet service', () => {
   });
 
   test('count tweets should return correct result', async (t) => {
+    const app = build(t);
+
     await services.user.create('test1', 'email@example.com', '12345');
     await services.tweet.create('test1', 'hello, world!');
     await services.tweet.create('test1', 'hello, world!test');
     await services.tweet.create('test1', 'hello, #test world!');
     await services.tweet.create('test1', 'hello, world!#test');
 
-    const count = await services.tweet.count();
+    const session = await services.auth.login('email@example.com', '12345');
+    const res = await app.inject({
+      url: '/tweets/count',
+      method: 'GET',
+      cookies: { session: session.id },
+    });
+
+    const count = Number(res.payload);
 
     t.same(count, 4);
 

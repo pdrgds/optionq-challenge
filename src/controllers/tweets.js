@@ -35,4 +35,10 @@ async function retweet(req, reply) {
   reply.code(200).send();
 }
 
-module.exports = { getTimeline, searchByHashtag, create, retweet };
+async function count(req, reply) {
+  const count = await services.tweet.count();
+
+  reply.code(200).send(count);
+}
+
+module.exports = { getTimeline, searchByHashtag, create, retweet, count };
