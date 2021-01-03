@@ -42,6 +42,35 @@ testWithDb('tweet service', () => {
     t.end();
   });
 
+  test('retweeted posts should appear on every follower timeline', async (t) => {
+    const app = build(t);
+
+    await services.user.create('test1', 'email@example.com', '12345');
+    const test2 = await services.user.create('test2', 'email2@example.com', '123456');
+    const test3 = await services.user.create('test3', 'email3@example.com', '98712');
+
+    await services.friendship.create('test2', 'test1');
+    await services.friendship.create('test3', 'test1');
+
+    const tweet1 = await services.tweet.create('test2', 'hello, world!');
+
+    const session = await services.auth.login('email@example.com', '12345');
+
+    await app.inject({
+      url: '/tweets/retweet/1',
+      method: 'POST',
+      cookies: { session: session.id },
+    });
+
+    await test2.reload();
+    await test3.reload();
+
+    t.ok(test2.timeline.includes(tweet1.id));
+    t.ok(test3.timeline.includes(tweet1.id));
+
+    t.end();
+  });
+
   test('search by hashtag should return correct results', async (t) => {
     const app = build(t);
 

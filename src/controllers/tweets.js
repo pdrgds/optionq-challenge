@@ -27,4 +27,12 @@ async function create(req, reply) {
   reply.code(200).send(newTweet);
 }
 
-module.exports = { getTimeline, searchByHashtag, create };
+async function retweet(req, reply) {
+  const userHandle = req.loggedUserHandle;
+
+  await services.tweet.retweet(userHandle, req.params.tweetId);
+
+  reply.code(200).send();
+}
+
+module.exports = { getTimeline, searchByHashtag, create, retweet };
