@@ -32,4 +32,7 @@ module.exports = database.define('User', {
   password: {
     type: DataTypes.STRING,
   },
+  blocked: {
+    type: DataTypes.JSON,
+  },
 });

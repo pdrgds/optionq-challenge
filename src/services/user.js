@@ -17,6 +17,7 @@ async function create(handle, email, inputPassword) {
     tweets: [],
     email,
     password,
+    blocked: [],
   });
 }
 
