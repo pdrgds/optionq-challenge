@@ -5,4 +5,5 @@ module.exports = {
   tweets: require('./tweets'),
   friendship: require('./friendship'),
   block: require('./block'),
+  favorite: require('./favorite'),
 };

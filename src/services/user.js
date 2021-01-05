@@ -19,6 +19,7 @@ async function create(handle, email, inputPassword) {
     password,
     blocked: [],
     isBlockedBy: [],
+    favorites: [],
   });
 }
 

@@ -38,4 +38,7 @@ module.exports = database.define('User', {
   isBlockedBy: {
     type: DataTypes.JSON,
   },
+  favorites: {
+    type: DataTypes.JSON,
+  },
 });
