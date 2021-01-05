@@ -19,7 +19,7 @@ testWithDb('block service', () => {
 
     const session = await services.auth.login('email@example.com', '12345');
 
-    const res = await app.inject({
+    await app.inject({
       url: '/block/create',
       method: 'POST',
       payload: { targetUserHandle: 'test2' },

@@ -30,4 +30,15 @@ testWithDb('friendship service', () => {
 
     t.end();
   });
+
+  test("user can't follow another user if he's blocked", async (t) => {
+    const test1 = await services.user.create('test1', 'email@example.com', '12345');
+    const test2 = await services.user.create('test2', 'email2@example.com', '123456');
+
+    await services.block.create('test2', 'test1');
+
+    await t.rejects(() => services.friendship.create('test1', 'test2'), "You're blocked by this user!");
+
+    t.end();
+  });
 });
