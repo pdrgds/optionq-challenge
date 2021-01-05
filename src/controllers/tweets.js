@@ -12,8 +12,8 @@ async function getTimeline(req, reply) {
 
 async function searchByHashtag(req, reply) {
   const hashtag = req.query.hashtag;
-
-  const searchResult = await services.tweet.searchHashtag(hashtag);
+  const loggedUserHandle = req.loggedUserHandle;
+  const searchResult = await services.tweet.searchHashtag(hashtag, loggedUserHandle);
 
   reply.code(200).send(searchResult);
 }

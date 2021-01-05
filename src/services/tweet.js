@@ -16,9 +16,16 @@ function retweet(handle, tweetId) {
   return distributeTweet(handle, tweetId);
 }
 
-function searchHashtag(tag) {
+async function searchHashtag(tag, loggedUserHandle) {
+  const user = await userService.findByHandle(loggedUserHandle);
+
   return models.tweets.findAll({
-    where: { text: { [Sequelize.Op.like]: `%#${tag}%` } },
+    where: {
+      userHandle: {
+        [Sequelize.Op.or]: [{ [Sequelize.Op.notIn]: user.blocked }, { [Sequelize.Op.notIn]: user.isBlockedBy }],
+      },
+      text: { [Sequelize.Op.like]: `%#${tag}%` },
+    },
   });
 }
 

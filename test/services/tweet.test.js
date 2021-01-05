@@ -99,6 +99,34 @@ testWithDb('tweet service', () => {
     t.end();
   });
 
+  test('search by hashtag shouldn not include tweets by blocked users', async (t) => {
+    await services.user.create('test1', 'email@example.com', '12345');
+    await services.tweet.create('test1', 'hello, world!');
+    await services.tweet.create('test1', 'hello, world!test');
+
+    await services.user.create('test2', 'email1@example.com', '123456');
+    await services.block.create('test1', 'test2');
+
+    const tweet1 = await services.tweet.create('test1', 'hello, #test world!');
+    const tweet2 = await services.tweet.create('test1', 'hello, world!#test');
+
+    await services.tweet.create('test2', 'lorem ipsum');
+    const tweet3 = await services.tweet.create('test2', 'lorem ipsum#test');
+
+    const result = await services.tweet.searchHashtag('test', 'test1');
+
+    t.same(tweet1.id, result[0].id);
+    t.same(tweet2.id, result[1].id);
+    t.same(result.length, 2);
+
+    const result2 = await services.tweet.searchHashtag('test', 'test2');
+
+    t.same(tweet3.id, result2[0].id);
+    t.same(result2.length, 1);
+
+    t.end();
+  });
+
   test('count tweets should return correct result', async (t) => {
     const app = build(t);
 
