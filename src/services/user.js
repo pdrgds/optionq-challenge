@@ -27,6 +27,10 @@ function getFollowingCount(handle) {
   return findByHandle(handle).then((user) => user.followingCount);
 }
 
+function getStats(handle) {
+  return models.users.findOne({ where: { handle }, attributes: ['followersCount', 'followingCount'] });
+}
+
 function findByHandle(handle) {
   return models.users.findOne({ where: { handle } });
 }
@@ -35,4 +39,5 @@ module.exports = {
   create,
   findByHandle,
   getFollowingCount,
+  getStats,
 };

@@ -6,4 +6,5 @@ module.exports = {
   friendship: require('./friendship'),
   block: require('./block'),
   favorite: require('./favorite'),
+  users: require('./users'),
 };
