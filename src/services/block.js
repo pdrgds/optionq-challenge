@@ -4,18 +4,21 @@ const userService = require('./user');
 
 async function create(sourceHandle, targetHandle) {
   const sourceUser = await userService.findByHandle(sourceHandle);
+  const targetUser = await userService.findByHandle(targetHandle);
 
-  await executeBlockSideEffects(sourceHandle, targetHandle);
-  await executeBlockSideEffects(targetHandle, sourceHandle);
+  await executeBlockSideEffects(sourceUser, targetHandle);
+  await executeBlockSideEffects(targetUser, sourceHandle);
+
+  await targetUser.update({
+    isBlockedBy: [...targetUser.isBlockedBy, sourceHandle],
+  });
 
   return sourceUser.update({
     blocked: [...sourceUser.blocked, targetHandle],
   });
 }
 
-async function executeBlockSideEffects(sourceHandle, targetHandle) {
-  const user = await userService.findByHandle(sourceHandle);
-
+async function executeBlockSideEffects(user, targetHandle) {
   const findHandle = (handle) => handle === targetHandle;
 
   const isFollowing = user.following.findIndex(findHandle);

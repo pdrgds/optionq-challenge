@@ -29,6 +29,7 @@ testWithDb('block service', () => {
     await test1.reload();
     await test2.reload();
 
+    t.ok(test2.isBlockedBy.includes('test1'));
     t.notOk(test1.following.includes('test2'));
     t.notOk(test2.followers.includes('test1'));
 

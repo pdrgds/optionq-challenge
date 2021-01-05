@@ -35,4 +35,7 @@ module.exports = database.define('User', {
   blocked: {
     type: DataTypes.JSON,
   },
+  isBlockedBy: {
+    type: DataTypes.JSON,
+  },
 });
