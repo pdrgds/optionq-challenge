@@ -12,6 +12,10 @@ To run tests:
 npm test
 ```
 
+To create a new user:
+```
+node src/register-user.js
+```
 To start the server:
 ```
 npm start
