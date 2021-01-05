@@ -6,19 +6,23 @@ async function create(sourceHandle, targetHandle) {
   const sourceUser = await userService.findByHandle(sourceHandle);
   const targetUser = await userService.findByHandle(targetHandle);
 
-  await executeBlockSideEffects(sourceUser, targetHandle);
-  await executeBlockSideEffects(targetUser, sourceHandle);
+  const sourceUserChanges = await executeBlockSideEffects(sourceUser, targetHandle);
+  const targetUserChanges = await executeBlockSideEffects(targetUser, sourceHandle);
 
   await targetUser.update({
+    ...targetUserChanges,
     isBlockedBy: [...targetUser.isBlockedBy, sourceHandle],
   });
 
   return sourceUser.update({
+    ...sourceUserChanges,
     blocked: [...sourceUser.blocked, targetHandle],
   });
 }
 
-async function executeBlockSideEffects(user, targetHandle) {
+function executeBlockSideEffects(user, targetHandle) {
+  let changes = {};
+
   const findHandle = (handle) => handle === targetHandle;
 
   const isFollowing = user.following.findIndex(findHandle);
@@ -29,7 +33,7 @@ async function executeBlockSideEffects(user, targetHandle) {
 
     newFollowing.splice(isFollowing, 1);
 
-    await user.update({ following: newFollowing });
+    changes = { ...changes, following: newFollowing };
   }
 
   if (isFollower > -1) {
@@ -37,8 +41,10 @@ async function executeBlockSideEffects(user, targetHandle) {
 
     newFollowers.splice(isFollower, 1);
 
-    await user.update({ followers: newFollowers });
+    changes = { ...changes, followers: newFollowers };
   }
+
+  return changes;
 }
 
 module.exports = { create };
