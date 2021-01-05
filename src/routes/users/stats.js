@@ -30,5 +30,5 @@ const schema = {
 
 module.exports = async function (fastify) {
   fastify.addHook('onRequest', controllers.auth.check);
-  fastify.get('/user/:userHandle', { schema }, controllers.users.getStats);
+  fastify.get('/:userHandle', { schema }, controllers.users.getStats);
 };
