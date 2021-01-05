@@ -7,4 +7,5 @@ module.exports = {
   tweet: require('./tweet'),
   favorite: require('./favorite'),
   friendship: require('./friendship'),
+  block: require('./block'),
 };
